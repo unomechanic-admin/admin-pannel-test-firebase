@@ -3,10 +3,11 @@
 import { useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import Image from 'next/image';
-import { useAuth } from '@/context/auth-provider';
 import { Button } from '@/components/ui/button';
 import { PlaceHolderImages } from '@/lib/placeholder-images';
 import { Loader2 } from 'lucide-react';
+import { useUser } from '@/firebase';
+import { useAuthActions } from '@/context/auth-provider';
 
 const GoogleIcon = () => (
   <svg className="mr-2 h-4 w-4" viewBox="0 0 48 48">
@@ -18,17 +19,18 @@ const GoogleIcon = () => (
 );
 
 export default function LoginPage() {
-  const { user, loading, signInWithGoogle } = useAuth();
+  const { user, isUserLoading } = useUser();
+  const { signInWithGoogle } = useAuthActions();
   const router = useRouter();
   const loginBg = PlaceHolderImages.find(p => p.id === 'hero-login');
 
   useEffect(() => {
-    if (!loading && user) {
+    if (!isUserLoading && user) {
       router.push('/dashboard');
     }
-  }, [user, loading, router]);
+  }, [user, isUserLoading, router]);
 
-  if (loading || (!loading && user)) {
+  if (isUserLoading || (!isUserLoading && user)) {
     return (
       <div className="flex h-screen w-screen items-center justify-center">
         <Loader2 className="h-8 w-8 animate-spin text-primary" />
@@ -47,8 +49,8 @@ export default function LoginPage() {
             </p>
           </div>
           <div className="grid gap-4">
-            <Button variant="outline" className="w-full" onClick={signInWithGoogle} disabled={loading}>
-              {loading ? (
+            <Button variant="outline" className="w-full" onClick={signInWithGoogle} disabled={isUserLoading}>
+              {isUserLoading ? (
                 <Loader2 className="mr-2 h-4 w-4 animate-spin" />
               ) : (
                 <GoogleIcon />

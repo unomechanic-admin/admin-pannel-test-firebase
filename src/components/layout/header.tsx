@@ -19,7 +19,8 @@ import {
 } from "@/components/ui/dropdown-menu"
 import { Input } from "@/components/ui/input"
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet"
-import { useAuth } from "@/context/auth-provider";
+import { useUser } from "@/firebase";
+import { useAuthActions } from "@/context/auth-provider";
 import { CircleUser, Home, LineChart, Package, Package2, PanelLeft, Search, ShoppingCart, Users, Wrench } from "lucide-react"
 import Link from "next/link"
 import { usePathname } from "next/navigation";
@@ -28,7 +29,8 @@ import { SidebarNav } from "./sidebar"
 import { ThemeToggle } from "../theme-toggle";
 
 export function Header() {
-  const { user, logout } = useAuth();
+  const { user } = useUser();
+  const { logout } = useAuthActions();
   const pathname = usePathname();
 
   const getBreadcrumbs = () => {

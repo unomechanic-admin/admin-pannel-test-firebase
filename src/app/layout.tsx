@@ -3,6 +3,7 @@ import './globals.css';
 import { Toaster } from "@/components/ui/toaster";
 import { MainProvider } from '@/components/providers/main-provider';
 import { cn } from '@/lib/utils';
+import { FirebaseClientProvider } from '@/firebase';
 
 export const metadata: Metadata = {
   title: 'UnoMechanic Admin Center',
@@ -23,10 +24,12 @@ export default function RootLayout({
         <link href="https://fonts.googleapis.com/css2?family=Source+Code+Pro&display=swap" rel="stylesheet" />
       </head>
       <body className={cn("font-body antialiased", "min-h-screen bg-background font-sans")}>
-        <MainProvider>
-          {children}
-          <Toaster />
-        </MainProvider>
+        <FirebaseClientProvider>
+          <MainProvider>
+            {children}
+            <Toaster />
+          </MainProvider>
+        </FirebaseClientProvider>
       </body>
     </html>
   );

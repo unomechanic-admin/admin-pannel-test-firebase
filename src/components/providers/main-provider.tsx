@@ -2,7 +2,6 @@
 
 import React from 'react';
 import { ThemeProvider } from '@/components/providers/theme-provider';
-import { AuthProvider } from '@/context/auth-provider';
 import { QueryProvider } from '@/components/providers/query-provider';
 
 export function MainProvider({ children }: { children: React.ReactNode }) {
@@ -14,9 +13,7 @@ export function MainProvider({ children }: { children: React.ReactNode }) {
       disableTransitionOnChange
     >
       <QueryProvider>
-        <AuthProvider>
-          {children}
-        </AuthProvider>
+        {children}
       </QueryProvider>
     </ThemeProvider>
   );
