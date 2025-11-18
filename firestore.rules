@@ -1,0 +1,167 @@
+/**
+ * @file Firebase Security Rules for UnoMechanic Platform
+ * @core_philosophy This ruleset enforces a strict user-ownership model for user-specific data and restricts write access to other collections based on administrative roles. Data validation is relaxed for rapid prototyping.
+ * @data_structure
+ *  - `/users/{userId}`: Stores personal user data; owned and accessible only by the user.
+ *  - `/mechanics/{mechanicId}`, `/bookings/{bookingId}`, `/services/{serviceId}`, `/payments/{paymentId}`, `/reviews/{reviewId}`, `/notifications/{notificationId}`:  Top-level collections with public read access and restricted write access.
+ *  - `/roles_admin/{uid}`:  Collection to manage administrative roles.
+ *  - `/activity_logs/{logId}`: Collection to store action logs, write-only.
+ * @key_security_decisions
+ *  - User listing is disallowed for privacy.
+ *  - Top-level collections are readable by everyone but writable only by admins.
+ *  - Admin status is determined by the existence of a document in `/roles_admin/{uid}`.
+ *  - No data validation is enforced, as this is for prototyping, and we must allow flexible data shapes.
+ *  - All destructive operations (`update`, `delete`) check for document existence (`resource != null`) to prevent errors.
+ * @denormalization_for_authorization N/A (Admin role checked via document existence, User Id is Path-based)
+ * @structural_segregation N/A (Drafts not applicable)
+ */
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    /**
+     * @description Manages user data, accessible only by the user themselves.
+     * @path /users/{userId}
+     * @allow (create) User with UID 'user123' can create their own document.
+     * @allow (get, update, delete) User with UID 'user123' can get, update, and delete their own document.
+     * @deny (create, get, update, delete) User with UID 'user456' cannot create, get, update or delete document of user 'user123'.
+     * @principle Enforces document ownership for all operations.
+     */
+    match /users/{userId} {
+      //isOwner checks if request.auth.uid == userId
+      allow get: if isOwner(userId);
+      allow list: if false; // User listing is not permitted.
+      allow create: if isSignedIn() && isOwner(userId);
+      allow update: if isSignedIn() && isExistingOwner(userId);
+      allow delete: if isSignedIn() && isExistingOwner(userId);
+    }
+
+    /**
+     * @description Manages mechanic data.
+     * @path /mechanics/{mechanicId}
+     * @allow (get, list) Any user can read mechanic data.
+     * @deny (create, update, delete) Only an admin can create, update, or delete mechanic data.
+     * @principle Restricts write access to admins only.
+     */
+    match /mechanics/{mechanicId} {
+      allow get, list: if true;
+      allow create: if isAdmin();
+      allow update: if isAdmin() && resource != null;
+      allow delete: if isAdmin() && resource != null;
+    }
+
+    /**
+     * @description Manages booking data.
+     * @path /bookings/{bookingId}
+     * @allow (get, list) Any user can read booking data.
+     * @deny (create, update, delete) Only an admin can create, update, or delete booking data.
+     * @principle Restricts write access to admins only.
+     */
+    match /bookings/{bookingId} {
+      allow get, list: if true;
+      allow create: if isAdmin();
+      allow update: if isAdmin() && resource != null;
+      allow delete: if isAdmin() && resource != null;
+    }
+
+    /**
+     * @description Manages service catalog data.
+     * @path /services/{serviceId}
+     * @allow (get, list) Any user can read service data.
+     * @deny (create, update, delete) Only an admin can create, update, or delete service data.
+     * @principle Restricts write access to admins only.
+     */
+    match /services/{serviceId} {
+      allow get, list: if true;
+      allow create: if isAdmin();
+      allow update: if isAdmin() && resource != null;
+      allow delete: if isAdmin() && resource != null;
+    }
+
+    /**
+     * @description Manages payment information.
+     * @path /payments/{paymentId}
+     * @allow (get, list) Any user can read payment data.
+     * @deny (create, update, delete) Only an admin can create, update, or delete payment data.
+     * @principle Restricts write access to admins only.
+     */
+    match /payments/{paymentId} {
+      allow get, list: if true;
+      allow create: if isAdmin();
+      allow update: if isAdmin() && resource != null;
+      allow delete: if isAdmin() && resource != null;
+    }
+
+    /**
+     * @description Manages user reviews.
+     * @path /reviews/{reviewId}
+     * @allow (get, list) Any user can read review data.
+     * @deny (create, update, delete) Only an admin can create, update, or delete review data.
+     * @principle Restricts write access to admins only.
+     */
+    match /reviews/{reviewId} {
+      allow get, list: if true;
+      allow create: if isAdmin();
+      allow update: if isAdmin() && resource != null;
+      allow delete: if isAdmin() && resource != null;
+    }
+
+    /**
+     * @description Manages admin role information, checked for admin access.
+     * @path /roles_admin/{uid}
+     * @allow (get) Anyone can get (used by isAdmin()).
+     * @allow (create, update, delete) Only an admin can manage other admins.
+     * @principle DBAC using existence check.
+     */
+    match /roles_admin/{uid} {
+      allow get: if true;  // Used by the isAdmin() function.
+      allow list: if false; // Listing admins is not permitted.
+      allow create: if isAdmin();
+      allow update: if isAdmin() && resource != null;
+      allow delete: if isAdmin() && resource != null;
+    }
+
+    /**
+     * @description Manages activity log entries.
+     * @path /activity_logs/{logId}
+     * @deny (get, list, update, delete) No one can read, list, update or delete log entries.
+     * @allow (create) Only an admin can create activity log entries.
+     * @principle Write-only collection for admins.
+     */
+    match /activity_logs/{logId} {
+      allow get, list, update, delete: if false;
+      allow create: if isAdmin();
+    }
+
+    /**
+     * @description Manages notification data.
+     * @path /notifications/{notificationId}
+     * @allow (get, list) Any user can read notification data.
+     * @deny (create, update, delete) Only an admin can create, update, or delete notification data.
+     * @principle Restricts write access to admins only.
+     */
+    match /notifications/{notificationId} {
+      allow get, list: if true;
+      allow create: if isAdmin();
+      allow update: if isAdmin() && resource != null;
+      allow delete: if isAdmin() && resource != null;
+    }
+  }
+
+  // Helper functions
+  function isSignedIn() {
+    return request.auth != null;
+  }
+
+  function isOwner(userId) {
+    return request.auth.uid == userId;
+  }
+
+  function isExistingOwner(userId) {
+    return isOwner(userId) && resource != null;
+  }
+
+  function isAdmin() {
+    return exists(/databases/$(database)/documents/roles_admin/$(request.auth.uid));
+  }
+}

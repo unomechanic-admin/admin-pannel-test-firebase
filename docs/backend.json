@@ -1,0 +1,525 @@
+{
+  "entities": {
+    "User": {
+      "$schema": "http://json-schema.org/draft-07/schema#",
+      "title": "User",
+      "type": "object",
+      "description": "Represents a user of the UnoMechanic platform.",
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "Unique identifier for the User entity."
+        },
+        "email": {
+          "type": "string",
+          "description": "Email address of the user.",
+          "format": "email"
+        },
+        "firstName": {
+          "type": "string",
+          "description": "First name of the user."
+        },
+        "lastName": {
+          "type": "string",
+          "description": "Last name of the user."
+        },
+        "phoneNumber": {
+          "type": "string",
+          "description": "Phone number of the user."
+        },
+        "address": {
+          "type": "string",
+          "description": "Address of the user."
+        },
+        "isBanned": {
+          "type": "boolean",
+          "description": "Indicates whether the user is banned from the platform."
+        }
+      },
+      "required": [
+        "id",
+        "email",
+        "firstName",
+        "lastName"
+      ]
+    },
+    "Mechanic": {
+      "$schema": "http://json-schema.org/draft-07/schema#",
+      "title": "Mechanic",
+      "type": "object",
+      "description": "Represents a mechanic on the UnoMechanic platform.",
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "Unique identifier for the Mechanic entity."
+        },
+        "userId": {
+          "type": "string",
+          "description": "Reference to User. (Relationship: User 1:1 Mechanic)"
+        },
+        "firstName": {
+          "type": "string",
+          "description": "First name of the mechanic."
+        },
+        "lastName": {
+          "type": "string",
+          "description": "Last name of the mechanic."
+        },
+        "email": {
+          "type": "string",
+          "description": "Email address of the mechanic.",
+          "format": "email"
+        },
+        "phoneNumber": {
+          "type": "string",
+          "description": "Phone number of the mechanic."
+        },
+        "address": {
+          "type": "string",
+          "description": "Address of the mechanic."
+        },
+        "isVerified": {
+          "type": "boolean",
+          "description": "Indicates whether the mechanic is verified."
+        },
+        "isSuspended": {
+          "type": "boolean",
+          "description": "Indicates whether the mechanic is suspended."
+        },
+        "rejectionReason": {
+          "type": "string",
+          "description": "The reason the mechanic application was rejected."
+        }
+      },
+      "required": [
+        "id",
+        "userId",
+        "firstName",
+        "lastName",
+        "email"
+      ]
+    },
+    "Booking": {
+      "$schema": "http://json-schema.org/draft-07/schema#",
+      "title": "Booking",
+      "type": "object",
+      "description": "Represents a booking made on the UnoMechanic platform.",
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "Unique identifier for the Booking entity."
+        },
+        "userId": {
+          "type": "string",
+          "description": "Reference to User. (Relationship: User 1:N Booking)"
+        },
+        "mechanicId": {
+          "type": "string",
+          "description": "Reference to Mechanic. (Relationship: Mechanic 1:N Booking)"
+        },
+        "serviceId": {
+          "type": "string",
+          "description": "Reference to Service. (Relationship: Service 1:N Booking)"
+        },
+        "bookingDate": {
+          "type": "string",
+          "description": "Date and time of the booking.",
+          "format": "date-time"
+        },
+        "status": {
+          "type": "string",
+          "description": "Status of the booking (e.g., pending, confirmed, completed, cancelled)."
+        },
+        "totalCost": {
+          "type": "number",
+          "description": "Total cost of the booking."
+        }
+      },
+      "required": [
+        "id",
+        "userId",
+        "mechanicId",
+        "serviceId",
+        "bookingDate",
+        "status",
+        "totalCost"
+      ]
+    },
+    "Service": {
+      "$schema": "http://json-schema.org/draft-07/schema#",
+      "title": "Service",
+      "type": "object",
+      "description": "Represents a service offered on the UnoMechanic platform.",
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "Unique identifier for the Service entity."
+        },
+        "name": {
+          "type": "string",
+          "description": "Name of the service."
+        },
+        "description": {
+          "type": "string",
+          "description": "Description of the service."
+        },
+        "price": {
+          "type": "number",
+          "description": "Price of the service."
+        },
+        "isPopular": {
+          "type": "boolean",
+          "description": "Indicates whether the service is marked as popular."
+        }
+      },
+      "required": [
+        "id",
+        "name",
+        "description",
+        "price"
+      ]
+    },
+    "Payment": {
+      "$schema": "http://json-schema.org/draft-07/schema#",
+      "title": "Payment",
+      "type": "object",
+      "description": "Represents a payment made on the UnoMechanic platform.",
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "Unique identifier for the Payment entity."
+        },
+        "bookingId": {
+          "type": "string",
+          "description": "Reference to Booking. (Relationship: Booking 1:1 Payment)"
+        },
+        "paymentDate": {
+          "type": "string",
+          "description": "Date and time of the payment.",
+          "format": "date-time"
+        },
+        "amount": {
+          "type": "number",
+          "description": "Amount of the payment."
+        },
+        "paymentMethod": {
+          "type": "string",
+          "description": "Method of payment (e.g., credit card, PayPal)."
+        },
+        "isRefunded": {
+          "type": "boolean",
+          "description": "Indicates whether the payment has been refunded."
+        }
+      },
+      "required": [
+        "id",
+        "bookingId",
+        "paymentDate",
+        "amount",
+        "paymentMethod"
+      ]
+    },
+    "Review": {
+      "$schema": "http://json-schema.org/draft-07/schema#",
+      "title": "Review",
+      "type": "object",
+      "description": "Represents a review given by a user for a mechanic on the UnoMechanic platform.",
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "Unique identifier for the Review entity."
+        },
+        "userId": {
+          "type": "string",
+          "description": "Reference to User. (Relationship: User 1:N Review)"
+        },
+        "mechanicId": {
+          "type": "string",
+          "description": "Reference to Mechanic. (Relationship: Mechanic 1:N Review)"
+        },
+        "rating": {
+          "type": "number",
+          "description": "Rating given by the user (e.g., 1-5 stars)."
+        },
+        "comment": {
+          "type": "string",
+          "description": "Comment provided by the user in the review."
+        },
+        "reviewDate": {
+          "type": "string",
+          "description": "Date the review was written",
+          "format": "date-time"
+        }
+      },
+      "required": [
+        "id",
+        "userId",
+        "mechanicId",
+        "rating",
+        "comment"
+      ]
+    },
+    "Admin": {
+      "$schema": "http://json-schema.org/draft-07/schema#",
+      "title": "Admin",
+      "type": "object",
+      "description": "Represents an administrator of the UnoMechanic platform.",
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "Unique identifier for the Admin entity."
+        },
+        "email": {
+          "type": "string",
+          "description": "Email address of the administrator.",
+          "format": "email"
+        },
+        "role": {
+          "type": "string",
+          "description": "Role of the administrator (e.g., superadmin, manager)."
+        }
+      },
+      "required": [
+        "id",
+        "email",
+        "role"
+      ]
+    },
+    "ActivityLog": {
+      "$schema": "http://json-schema.org/draft-07/schema#",
+      "title": "ActivityLog",
+      "type": "object",
+      "description": "Represents an activity log entry on the UnoMechanic platform.",
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "Unique identifier for the ActivityLog entity."
+        },
+        "adminId": {
+          "type": "string",
+          "description": "Reference to Admin. (Relationship: Admin 1:N ActivityLog)"
+        },
+        "timestamp": {
+          "type": "string",
+          "description": "Timestamp of the activity log entry.",
+          "format": "date-time"
+        },
+        "action": {
+          "type": "string",
+          "description": "Description of the action that was performed."
+        },
+        "entityType": {
+          "type": "string",
+          "description": "The type of entity affected by the action (e.g., User, Mechanic, Booking)."
+        },
+        "entityId": {
+          "type": "string",
+          "description": "The ID of the entity affected by the action."
+        }
+      },
+      "required": [
+        "id",
+        "adminId",
+        "timestamp",
+        "action",
+        "entityType",
+        "entityId"
+      ]
+    },
+    "Notification": {
+      "$schema": "http://json-schema.org/draft-07/schema#",
+      "title": "Notification",
+      "type": "object",
+      "description": "Represents a notification sent on the UnoMechanic platform.",
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "Unique identifier for the Notification entity."
+        },
+        "recipientId": {
+          "type": "string",
+          "description": "Reference to User. (Relationship: User 1:N Notification)"
+        },
+        "senderId": {
+          "type": "string",
+          "description": "Reference to Admin. (Relationship: Admin 1:N Notification)"
+        },
+        "timestamp": {
+          "type": "string",
+          "description": "Timestamp of the notification.",
+          "format": "date-time"
+        },
+        "message": {
+          "type": "string",
+          "description": "Content of the notification."
+        },
+        "isRead": {
+          "type": "boolean",
+          "description": "Indicates whether the notification has been read."
+        }
+      },
+      "required": [
+        "id",
+        "recipientId",
+        "senderId",
+        "timestamp",
+        "message"
+      ]
+    }
+  },
+  "auth": {
+    "providers": [
+      "password",
+      "anonymous"
+    ]
+  },
+  "firestore": {
+    "structure": [
+      {
+        "path": "/users/{userId}",
+        "definition": {
+          "entityName": "User",
+          "schema": {
+            "$ref": "#/backend/entities/User"
+          },
+          "description": "Stores user data. Path-based ownership allows direct access control based on the user ID.",
+          "params": [
+            {
+              "name": "userId",
+              "description": "The unique identifier for the user."
+            }
+          ]
+        }
+      },
+      {
+        "path": "/mechanics/{mechanicId}",
+        "definition": {
+          "entityName": "Mechanic",
+          "schema": {
+            "$ref": "#/backend/entities/Mechanic"
+          },
+          "description": "Stores mechanic data.",
+          "params": [
+            {
+              "name": "mechanicId",
+              "description": "The unique identifier for the mechanic."
+            }
+          ]
+        }
+      },
+      {
+        "path": "/bookings/{bookingId}",
+        "definition": {
+          "entityName": "Booking",
+          "schema": {
+            "$ref": "#/backend/entities/Booking"
+          },
+          "description": "Stores booking data.",
+          "params": [
+            {
+              "name": "bookingId",
+              "description": "The unique identifier for the booking."
+            }
+          ]
+        }
+      },
+      {
+        "path": "/services/{serviceId}",
+        "definition": {
+          "entityName": "Service",
+          "schema": {
+            "$ref": "#/backend/entities/Service"
+          },
+          "description": "Stores service catalog data.",
+          "params": [
+            {
+              "name": "serviceId",
+              "description": "The unique identifier for the service."
+            }
+          ]
+        }
+      },
+      {
+        "path": "/payments/{paymentId}",
+        "definition": {
+          "entityName": "Payment",
+          "schema": {
+            "$ref": "#/backend/entities/Payment"
+          },
+          "description": "Stores payment information.",
+          "params": [
+            {
+              "name": "paymentId",
+              "description": "The unique identifier for the payment."
+            }
+          ]
+        }
+      },
+      {
+        "path": "/reviews/{reviewId}",
+        "definition": {
+          "entityName": "Review",
+          "schema": {
+            "$ref": "#/backend/entities/Review"
+          },
+          "description": "Stores user reviews.",
+          "params": [
+            {
+              "name": "reviewId",
+              "description": "The unique identifier for the review."
+            }
+          ]
+        }
+      },
+      {
+        "path": "/roles_admin/{uid}",
+        "definition": {
+          "entityName": "Admin",
+          "schema": {
+            "$ref": "#/backend/entities/Admin"
+          },
+          "description": "Stores admin role information. Existence of a document signifies admin status.  DBAC using existence check.",
+          "params": [
+            {
+              "name": "uid",
+              "description": "The unique identifier for the admin user (Firebase UID)."
+            }
+          ]
+        }
+      },
+      {
+        "path": "/activity_logs/{logId}",
+        "definition": {
+          "entityName": "ActivityLog",
+          "schema": {
+            "$ref": "#/backend/entities/ActivityLog"
+          },
+          "description": "Stores activity log entries.",
+          "params": [
+            {
+              "name": "logId",
+              "description": "The unique identifier for the activity log entry."
+            }
+          ]
+        }
+      },
+      {
+        "path": "/notifications/{notificationId}",
+        "definition": {
+          "entityName": "Notification",
+          "schema": {
+            "$ref": "#/backend/entities/Notification"
+          },
+          "description": "Stores notification data.",
+          "params": [
+            {
+              "name": "notificationId",
+              "description": "The unique identifier for the notification."
+            }
+          ]
+        }
+      }
+    ],
+    "reasoning": "The Firestore data structure is designed to support the UnoMechanic Admin Center application, focusing on authorization independence and query performance.  User-owned data is organized under `/users/{userId}`, while other data is stored in top-level collections. Admin roles are managed using the `/roles_admin/{uid}` pattern.  This structure ensures that security rules can be written without relying on `get()` calls, enabling atomic operations and improved scalability. The design also supports the required QAPs (list operations)."
+  }
+}
