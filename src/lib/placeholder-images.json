@@ -1,3 +1,58 @@
 {
-  "placeholderImages": []
+  "placeholderImages": [
+    {
+      "id": "user-1",
+      "description": "Avatar of a user",
+      "imageUrl": "https://images.unsplash.com/photo-1599566150163-29194dcaad36?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw0fHxwZXJzb24lMjBhdmF0YXJ8ZW58MHx8fHwxNzYzNDYxMDcxfDA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "person avatar"
+    },
+    {
+      "id": "user-2",
+      "description": "Avatar of a user",
+      "imageUrl": "https://images.unsplash.com/photo-1750535135451-7c20e24b60c1?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw5fHxwZXJzb24lMjBhdmF0YXJ8ZW58MHx8fHwxNzYzNDYxMDcxfDA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "person avatar"
+    },
+    {
+      "id": "user-3",
+      "description": "Avatar of a user",
+      "imageUrl": "https://images.unsplash.com/photo-1599566150163-29194dcaad36?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw0fHxwZXJzb24lMjBhdmF0YXJ8ZW58MHx8fHwxNzYzNDYxMDcxfDA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "person avatar"
+    },
+    {
+      "id": "user-4",
+      "description": "Avatar of a user",
+      "imageUrl": "https://images.unsplash.com/photo-1599566150163-29194dcaad36?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw0fHxwZXJzb24lMjBhdmF0YXJ8ZW58MHx8fHwxNzYzNDYxMDcxfDA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "person avatar"
+    },
+    {
+      "id": "user-5",
+      "description": "Avatar of a user",
+      "imageUrl": "https://images.unsplash.com/photo-1724435811349-32d27f4d5806?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw3fHxwZXJzb24lMjBhdmF0YXJ8ZW58MHx8fHwxNzYzNDYxMDcxfDA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "person avatar"
+    },
+    {
+      "id": "mechanic-1",
+      "description": "Profile picture of a mechanic",
+      "imageUrl": "https://images.unsplash.com/photo-1656156775128-7df95b7a79c9?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw0fHxtZWNoYW5pYyUyMHBvcnRyYWl0fGVufDB8fHx8MTc2MzQwMjY3Nnww&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "mechanic portrait"
+    },
+    {
+      "id": "mechanic-2",
+      "description": "Profile picture of a mechanic",
+      "imageUrl": "https://images.unsplash.com/photo-1603240663507-8b011c6f75a0?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwxMHx8bWVjaGFuaWMlMjBwb3J0cmFpdHxlbnwwfHx8fDE3NjM0MDI2NzZ8MA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "mechanic portrait"
+    },
+    {
+      "id": "mechanic-3",
+      "description": "Profile picture of a mechanic",
+      "imageUrl": "https://images.unsplash.com/photo-1656156775128-7df95b7a79c9?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw0fHxtZWNoYW5pYyUyMHBvcnRyYWl0fGVufDB8fHx8MTc2MzQwMjY3Nnww&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "mechanic portrait"
+    },
+    {
+      "id": "hero-login",
+      "description": "Abstract background for login page",
+      "imageUrl": "https://images.unsplash.com/photo-1486262715619-67b85e0b08d3?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw3fHxjYXIlMjBlbmdpbmV8ZW58MHx8fHwxNzYzMzk1ODg3fDA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "car engine"
+    }
+  ]
 }
